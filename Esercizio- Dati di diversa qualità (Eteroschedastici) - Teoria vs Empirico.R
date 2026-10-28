@@ -18,7 +18,7 @@ media_w <- 0
 # Scenario 2: Var 1 e 4 (La seconda tranche è sopra soglia -> Conviene il Cestino)
 varianza_W1 <- 1
 varianza_W2 <- 2
-varianza_W3 <- 
+varianza_W3 <- 4
   
 sigma_W1 <- sqrt(varianza_W1)
 sigma_W2 <- sqrt(varianza_W2)
@@ -132,4 +132,51 @@ risultati_scenario2 <- data.frame(
 )
 print("SCENARIO 2 (Varianze 1 e 4)")
 risultati_scenario2
+
+# GRAFICO 1: Boxplot per confrontare la dispersione degli errori (Scenario 1)
+
+# Creiamo un dataframe
+df_errori_scen1 <- data.frame(
+  ML = MSE_EMP_ML1,
+  Media = MSE_EMP_SM1,
+  Cestino = MSE_EMP_SENZA2
+)
+boxplot(df_errori_scen1, 
+        main = "Confronto degli Stimatori (Scenario 1)", 
+        ylab = "Valori MSE")
+
+# GRAFICO 2: Boxplot per lo Scenario 2 (dove il Cestino diventa migliore della Media)
+
+df_errori_scen2 <- data.frame(
+  ML = MSE_EMP_ML2,
+  Media = MSE_EMP_SM2,
+  Cestino = MSE_EMP_SENZA2
+)
+boxplot(df_errori_scen2, 
+        main = "Confronto degli Stimatori (Scenario 2)", 
+        ylab = "Valori MSE")
+
+# GRAFICO 3: Istogrammi affiancati dell'ML e della Media (Scenario 1)
+
+par(mfrow = c(1, 2)) 
+
+hist(MSE_EMP_ML1, 
+     main = "Istogramma ML", 
+     xlab = "Errore Quadratico", 
+     ylab = "Frequenza")
+
+hist(MSE_EMP_SM1, 
+     main = "Istogramma Media Semplice", 
+     xlab = "Errore Quadratico", 
+     ylab = "Frequenza")
+
+par(mfrow = c(1, 1)) 
+
+# GRAFICO 4: Scatter plot con linee per vedere la convergenza dell'ML al variare di N_MC
+
+plot(N_MC_TOTALI, MSE_EMP_ML1_TOTALI, 
+     type = "b",
+     main = "Convergenza ML all'aumentare delle prove",
+     xlab = "Numero di Prove Monte Carlo",
+     ylab = "MSE Medio Empirico")
 
