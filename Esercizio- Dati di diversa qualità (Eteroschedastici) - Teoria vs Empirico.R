@@ -158,7 +158,7 @@ boxplot(df_errori_scen2,
 
 # GRAFICO 3: Istogrammi affiancati dell'ML e della Media (Scenario 1)
 
-par(mfrow = c(1, 2)) 
+par(mfrow = c(1, 3)) 
 
 hist(MSE_EMP_ML1, 
      main = "Istogramma ML", 
@@ -170,13 +170,41 @@ hist(MSE_EMP_SM1,
      xlab = "Errore Quadratico", 
      ylab = "Frequenza")
 
+hist(MSE_EMP_SENZA2, 
+     main = "Istogramma Media Semplice", 
+     xlab = "Errore Quadratico", 
+     ylab = "Frequenza")
+
 par(mfrow = c(1, 1)) 
 
-# GRAFICO 4: Scatter plot con linee per vedere la convergenza dell'ML al variare di N_MC
+# GRAFICO 4: Istogrammi affiancati dell'ML e della Media (Scenario 2)
+
+par(mfrow = c(1, 3)) 
+
+hist(MSE_EMP_ML2, 
+     main = "Istogramma ML", 
+     xlab = "Errore Quadratico", 
+     ylab = "Frequenza")
+
+hist(MSE_EMP_SM2, 
+     main = "Istogramma Media Semplice", 
+     xlab = "Errore Quadratico", 
+     ylab = "Frequenza")
+
+hist(MSE_EMP_SENZA2, 
+     main = "Istogramma Media Semplice", 
+     xlab = "Errore Quadratico", 
+     ylab = "Frequenza")
+
+par(mfrow = c(1, 1)) 
+
+# GRAFICO 5: Scatter plot con linee per vedere la convergenza dell'ML al variare di N_MC
 
 plot(N_MC_TOTALI, MSE_EMP_ML1_TOTALI, 
      type = "b",
-     main = "Convergenza ML all'aumentare delle prove",
+     main = "Convergenza ML all'aumentare delle prove nello Scenario 1",
      xlab = "Numero di Prove Monte Carlo",
      ylab = "MSE Medio Empirico")
+
+abline(h = MSE_TEO_ML1, col = "red", "MSE Teorico ML Scenario 1")
 
