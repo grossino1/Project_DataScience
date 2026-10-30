@@ -171,7 +171,7 @@ hist(MSE_EMP_SM1,
      ylab = "Frequenza")
 
 hist(MSE_EMP_SENZA2, 
-     main = "Istogramma Media Semplice", 
+     main = "Istogramma Cestino", 
      xlab = "Errore Quadratico", 
      ylab = "Frequenza")
 
@@ -192,7 +192,7 @@ hist(MSE_EMP_SM2,
      ylab = "Frequenza")
 
 hist(MSE_EMP_SENZA2, 
-     main = "Istogramma Media Semplice", 
+     main = "Istogramma Cestino", 
      xlab = "Errore Quadratico", 
      ylab = "Frequenza")
 
@@ -207,4 +207,3 @@ plot(N_MC_TOTALI, MSE_EMP_ML1_TOTALI,
      ylab = "MSE Medio Empirico")
 
 abline(h = MSE_TEO_ML1, col = "red", "MSE Teorico ML Scenario 1")
-
