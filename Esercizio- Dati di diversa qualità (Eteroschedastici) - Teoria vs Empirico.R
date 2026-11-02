@@ -207,3 +207,47 @@ plot(N_MC_TOTALI, MSE_EMP_ML1_TOTALI,
      ylab = "MSE Medio Empirico")
 
 abline(h = MSE_TEO_ML1, col = "red", "MSE Teorico ML Scenario 1")
+
+### PARTE PER CONSEGNARE I GRAFICI###
+# ==============================================================================
+# GRAFICO 1: Confronto visivo del comportamento degli stimatori nei 2 Scenari
+# ==============================================================================
+
+# Prepariamo i due dataframe con le simulazioni empiriche
+df_scen1 <- data.frame(
+  ML = MSE_EMP_ML1,
+  Media = MSE_EMP_SM1,
+  Cestino = MSE_EMP_SENZA2
+)
+
+df_scen2 <- data.frame(
+  ML = MSE_EMP_ML2,
+  Media = MSE_EMP_SM2,
+  Cestino = MSE_EMP_SENZA2
+)
+
+# Impostiamo la griglia con 1 riga e 2 colonne per il confronto diretto
+par(mfrow = c(1, 2))
+
+# --- SCENARIO 1: Var 2 = 2 (Sotto soglia) ---
+boxplot(df_scen1, 
+        main = expression("Scenario 1: " * sigma[2]^2 * " = 2"),
+        ylab = "MSE Empirico",
+        col = c("lightblue", "lightgreen", "lightpink"),
+        ylim = c(0, max(MSE_EMP_SM2) * 1.5))
+
+# Aggiungiamo una linea di riferimento sulla Media per mostrare che batte il Cestino
+abline(h = MSE_TEO_SM1, col = "darkgreen", lty = 2, lwd = 2)
+
+# --- SCENARIO 2: Var 2 = 4 (Sopra soglia) ---
+boxplot(df_scen2, 
+        main = expression("Scenario 2: " * sigma[3]^2 * " = 4"),
+        ylab = "MSE Empirico",
+        col = c("lightblue", "lightgreen", "lightpink"),
+        ylim = c(0, max(MSE_EMP_SM2) * 1.5))
+
+# Aggiungiamo una linea di riferimento sul Cestino per mostrare che ora batte la Media
+abline(h = MSE_TEO_SENZA2, col = "red", lty = 2, lwd = 2)
+
+# Ripristiniamo la griglia standard
+par(mfrow = c(1, 1))
