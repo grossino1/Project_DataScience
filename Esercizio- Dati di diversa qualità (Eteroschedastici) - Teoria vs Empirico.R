@@ -251,3 +251,114 @@ abline(h = MSE_TEO_SENZA2, col = "red", lty = 2, lwd = 2)
 
 # Ripristiniamo la griglia standard
 par(mfrow = c(1, 1))
+
+# ==============================================================================
+# GRAFICO AGGIUNTIVO: Decadimento dell'MSE al variare di N (dimensione campione)
+# ==============================================================================
+
+# Griglia di valori per N (da 20 a 1000 campioni)
+N_grid <- seq(20, 1000, by = 20)
+
+# Varianze dello Scenario 1 (Var 1 e Var 2)
+v1 <- varianza_W1
+v2 <- varianza_W2
+p1_grid <- v2 / (v1 + v2)
+
+# Calcolo dell'MSE teorico al variare di N per i tre stimatori
+mse_teo_ml_N   <- (2 / N_grid) * (p1_grid^2 * v1 + (1 - p1_grid)^2 * v2)
+mse_teo_sm_N   <- (2 / N_grid) * ((v1 + v2) / 4)
+mse_teo_cest_N <- (2 / N_grid) * v1
+
+# Disegno del grafico
+plot(N_grid, mse_teo_sm_N, 
+     type = "l", col = "green", lwd = 2,
+     ylim = c(0, max(mse_teo_sm_N) * 1.1),
+     main = "Decadimento dell'MSE al variare della dimensione del campione (N)",
+     xlab = "Numero di Campioni (N)",
+     ylab = "MSE Teorico")
+
+lines(N_grid, mse_teo_cest_N, col = "red", lwd = 2)
+lines(N_grid, mse_teo_ml_N, col = "blue", lwd = 2)
+
+legend("topright", 
+       legend = c("Media Semplice", "Cestino", "ML"),
+       col = c("green", "red", "blue"), 
+       lty = 1, lwd = 2, bty = "n")
+# GRAFICO 3: Convergenza Monte Carlo 
+
+
+max_y <- max(MSE_EMP_SENZA2_TOTALI, MSE_EMP_SM1_TOTALI) * 1.35
+min_y <- min(MSE_TEO_ML1) * 0.85
+
+plot(N_MC_TOTALI, MSE_EMP_SM1_TOTALI, 
+     type = "b", 
+     pch = 19, 
+     col = "green", 
+     log = "x", 
+     ylim = c(min_y, max_y), 
+     main = "Grafico 3: Convergenza Monte Carlo per tutti e tre gli Stimatori",
+     xlab = "Numero di Prove Monte Carlo (Log Scale)",
+     ylab = "MSE Medio Empirico")
+
+lines(N_MC_TOTALI, MSE_EMP_SENZA2_TOTALI, type = "b", pch = 19, col = "red")
+lines(N_MC_TOTALI, MSE_EMP_ML1_TOTALI, type = "b", pch = 19, col = "blue")
+
+
+abline(h = MSE_TEO_SM1, col = "green", lty = 2, lwd = 1.5)
+abline(h = MSE_TEO_SENZA2, col = "red", lty = 2, lwd = 1.5)
+abline(h = MSE_TEO_ML1, col = "blue", lty = 2, lwd = 1.5)
+
+
+legend("topright", 
+       legend = c("Media Semplice (Empirico)", 
+                  "Cestino (Empirico)", 
+                  "ML (Empirico)", 
+                  "Asintoti Teorici"),
+       col = c("green", "red", "blue", "black"), 
+       lty = c(1, 1, 1, 2), 
+       pch = c(19, 19, 19, NA), 
+       lwd = c(1.5, 1.5, 1.5, 1.5), 
+       cex = 0.8,         
+       bg = "white",       
+       box.col = "gray")    
+# ==============================================================================
+# GRAFICO 3: Convergenza Monte Carlo per tutti e tre gli Stimatori (CORRETTO)
+# ==============================================================================
+
+# 1. Calcoliamo un limite dell'asse Y ampliato per creare spazio in alto per la legenda
+min_y <- min(MSE_TEO_ML1) * 0.80
+max_y <- max(MSE_EMP_SENZA2_TOTALI, MSE_EMP_SM1_TOTALI) * 1.50
+
+# 2. Disegno del grafico principale (Media Semplice)
+plot(N_MC_TOTALI, MSE_EMP_SM1_TOTALI, 
+     type = "b", 
+     pch = 19, 
+     col = "green", 
+     log = "x", 
+     ylim = c(min_y, max_y), # Asse Y ampliato
+     main = "Grafico 3: Convergenza Monte Carlo per tutti e tre gli stimatori",
+     xlab = "Numero di prove Monte Carlo",
+     ylab = "MSE medio empirico")
+
+# 3. Aggiunta delle spezzate per Cestino (Rosso) e ML (Blu)
+lines(N_MC_TOTALI, MSE_EMP_SENZA2_TOTALI, type = "b", pch = 19, col = "red")
+lines(N_MC_TOTALI, MSE_EMP_ML1_TOTALI, type = "b", pch = 19, col = "blue")
+
+# 4. Aggiunta degli asintoti teorici fissi (Linee orizzontali tratteggiate)
+abline(h = MSE_TEO_SM1, col = "green", lty = 2, lwd = 1.5)
+abline(h = MSE_TEO_SENZA2, col = "red", lty = 2, lwd = 1.5)
+abline(h = MSE_TEO_ML1, col = "blue", lty = 2, lwd = 1.5)
+
+
+legend("topleft", 
+       legend = c("Media semplice (empirico)", 
+                  "Cestino (empirico)", 
+                  "ML (empirico)", 
+                  "Asintoti teorici"),
+       col = c("green", "red", "blue", "black"), 
+       lty = c(1, 1, 1, 2), 
+       pch = c(19, 19, 19, NA), 
+       lwd = c(1.5, 1.5, 1.5, 1.5), 
+       cex = 0.78,         
+       bg = "white",        
+       box.col = "gray")    
