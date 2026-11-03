@@ -18,7 +18,7 @@ media_w <- 0
 # Scenario 2: Var 1 e 4 (La seconda tranche è sopra soglia -> Conviene il Cestino)
 varianza_W1 <- 1
 varianza_W2 <- 2
-varianza_W3 <- 4
+varianza_W3 <- 4 
   
 sigma_W1 <- sqrt(varianza_W1)
 sigma_W2 <- sqrt(varianza_W2)
