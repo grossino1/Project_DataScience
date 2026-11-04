@@ -211,7 +211,6 @@ plot(N_MC_TOTALI, MSE_EMP_ML1_TOTALI,
      xlab = "Numero di Prove Monte Carlo (N_MC)",
      ylab = "MSE Medio Empirico")
 
-<<<<<<< HEAD
 # Aggiungiamo le curve empiriche di Media Semplice e Cestino
 lines(N_MC_TOTALI, MSE_EMP_SM1_TOTALI, type = "b", pch = 16, col = "blue", lwd = 2)
 lines(N_MC_TOTALI, MSE_EMP_SENZA2_TOTALI, type = "b", pch = 16, col = "darkslategray", lwd = 2)
@@ -356,7 +355,7 @@ legend("topright", legend = c("ML pesato", "Media semplice", "Solo gruppo 1", "L
 
 # Ripristiniamo la visualizzazione singola per i futuri grafici
 par(mfrow = c(1, 1))
-=======
+
 abline(h = MSE_TEO_ML1, col = "red", "MSE Teorico ML Scenario 1")
 
 ### PARTE PER CONSEGNARE I GRAFICI###
@@ -513,4 +512,3 @@ legend("topleft",
        cex = 0.78,         
        bg = "white",        
        box.col = "gray")    
->>>>>>> 14a3a55749912095741e4af9afcf8dcf1d38a139
