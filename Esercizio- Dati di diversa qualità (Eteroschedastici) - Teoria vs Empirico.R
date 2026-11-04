@@ -133,8 +133,7 @@ risultati_scenario2 <- data.frame(
 print("SCENARIO 2 (Varianze 1 e 4)")
 risultati_scenario2
 
-# GRAFICO 1: Boxplot per confrontare la dispersione degli errori (Scenario 1)
-
+# GRAFICO 1 - SCENARIO 1: Boxplot per confrontare la dispersione degli errori
 # Creiamo un dataframe
 df_errori_scen1 <- data.frame(
   ML = MSE_EMP_ML1,
@@ -145,8 +144,7 @@ boxplot(df_errori_scen1,
         main = "Confronto degli Stimatori (Scenario 1)", 
         ylab = "Valori MSE")
 
-# GRAFICO 2: Boxplot per lo Scenario 2 (dove il Cestino diventa migliore della Media)
-
+# GRAFICO 1 - SCENARIO 1: Boxplot dove il Cestino diventa migliore della Media
 df_errori_scen2 <- data.frame(
   ML = MSE_EMP_ML2,
   Media = MSE_EMP_SM2,
@@ -156,8 +154,7 @@ boxplot(df_errori_scen2,
         main = "Confronto degli Stimatori (Scenario 2)", 
         ylab = "Valori MSE")
 
-# GRAFICO 3: Istogrammi affiancati dell'ML e della Media (Scenario 1)
-
+# GRAFICO 2 - SCENARIO 1: Istogrammi affiancati dell'ML e della Media 
 par(mfrow = c(1, 3)) 
 
 hist(MSE_EMP_ML1, 
@@ -177,8 +174,7 @@ hist(MSE_EMP_SENZA2,
 
 par(mfrow = c(1, 1)) 
 
-# GRAFICO 4: Istogrammi affiancati dell'ML e della Media (Scenario 2)
-
+# GRAFICO 2 - SCENARIO 2
 par(mfrow = c(1, 3)) 
 
 hist(MSE_EMP_ML2, 
@@ -198,11 +194,12 @@ hist(MSE_EMP_SENZA2,
 
 par(mfrow = c(1, 1)) 
 
-# GRAFICO 5: Scatter plot con linee per vedere la convergenza dell'ML al variare di N_MC
+# GRAFICO 3 - SCENARIO 1: Scatter plot con linee per vedere la convergenza dell'ML al variare di N_MC
 # Calcoliamo i limiti dell'asse Y per farci stare comodamente tutte e tre le curve
 y_min <- min(MSE_EMP_ML1_TOTALI, MSE_EMP_SM1_TOTALI)
 y_max <- max(MSE_EMP_SENZA2_TOTALI)
 
+par(mfrow = c(1, 2)) 
 # Plot base con la curva dell'ML (Asse X Lineare, come nel tuo grafico originale)
 plot(N_MC_TOTALI, MSE_EMP_ML1_TOTALI, 
      type = "b", pch = 16, col = "red", lwd = 2,
@@ -220,11 +217,47 @@ abline(h = MSE_TEO_ML1, col = "red", lty = 2)
 abline(h = MSE_TEO_SM1, col = "blue", lty = 2)
 abline(h = MSE_TEO_SENZA2, col = "darkslategray", lty = 2)
 
-# Legenda
-legend("right", 
-       legend = c("ML pesato", "Media semplice", "Solo gruppo 1", "--- Valori Teorici"),
-       col = c("red", "blue", "darkslategray", "black"),
-       pch = c(16, 16, 16, NA), lty = c(1, 1, 1, 2), bty = "n")
+# Sostituisci la tua attuale funzione legend() in entrambi i blocchi di codice con questa:
+legend("topright", 
+       legend = c("ML pesato", "Media semplice", "Solo gruppo 1", "Valori Teorici"),
+       col = c("red", "blue", "darkslategray", "black"), # Usa i tuoi colori esatti
+       lty = c(1, 1, 1, 2), 
+       pch = c(19, 19, 19, NA),
+       bty = "n",  # OPZIONALE ma consigliato: rimuove il riquadro nero per un look più accademico
+       cex = 0.9)  # OPZIONALE: rimpicciolisce leggermente il testo per non farlo "urlare" nel grafico
+
+# GRAFICO 3 - SCENARIO 2:
+# Calcoliamo i limiti dell'asse Y per farci stare comodamente tutte e tre le curve
+y_min <- min(MSE_EMP_ML2_TOTALI, MSE_EMP_SM2_TOTALI)
+y_max <- max(MSE_EMP_SENZA2_TOTALI)
+
+# Plot base con la curva dell'ML (Asse X Lineare, come nel tuo grafico originale)
+plot(N_MC_TOTALI, MSE_EMP_ML2_TOTALI, 
+     type = "b", pch = 16, col = "red", lwd = 2,
+     ylim = c(y_min, y_max),
+     main = "Stabilità degli Stimatori all'aumentare delle prove (Scenario 2)",
+     xlab = "Numero di Prove Monte Carlo (N_MC)",
+     ylab = "MSE Medio Empirico")
+
+# Aggiungiamo le curve empiriche di Media Semplice e Cestino
+lines(N_MC_TOTALI, MSE_EMP_SM2_TOTALI, type = "b", pch = 16, col = "blue", lwd = 2)
+lines(N_MC_TOTALI, MSE_EMP_SENZA2_TOTALI, type = "b", pch = 16, col = "darkslategray", lwd = 2)
+
+# Aggiungiamo le tre linee teoriche orizzontali verso cui convergono
+abline(h = MSE_TEO_ML2, col = "red", lty = 2)
+abline(h = MSE_TEO_SM2, col = "blue", lty = 2)
+abline(h = MSE_TEO_SENZA2, col = "darkslategray", lty = 2)
+
+# Sostituisci la tua attuale funzione legend() in entrambi i blocchi di codice con questa:
+legend("topright", 
+       legend = c("ML pesato", "Media semplice", "Solo gruppo 1", "Valori Teorici"),
+       col = c("red", "blue", "darkslategray", "black"), # Usa i tuoi colori esatti
+       lty = c(1, 1, 1, 2), 
+       pch = c(19, 19, 19, NA),
+       bty = "n",  # OPZIONALE ma consigliato: rimuove il riquadro nero per un look più accademico
+       cex = 0.9)  # OPZIONALE: rimpicciolisce leggermente il testo per non farlo "urlare" nel grafico
+
+par(mfrow = c(1, 1)) 
 
 # CALCOLO DEL VALORE DEGLI STIMATORE AUMENTANDO GLI N CAMPIONI
 # Fissiamo le prove Monte Carlo a 1000 per avere stime stabili
@@ -310,7 +343,7 @@ for(j in 1:length(N_TOTALI)) {
   MSE_EMP_SM2_N[j] <- mean(MSE_EMP_SM2)
 }
 
-# GRAFICI 6: MSE in scala log-log (Empirico vs Teorico)
+# GRAFICI 4 - SCENARIO 1 E 2: MSE in scala log-log (Empirico vs Teorico)
 # Dividiamo la finestra per avere i due scenari affiancati
 par(mfrow = c(1, 2)) 
 
@@ -332,6 +365,13 @@ lines(log_N, log10(MSE_TEO_SM1_N), col = "blue")
 points(log_N, log10(MSE_EMP_SENZA2_N), pch = 16, col = "darkslategray")
 lines(log_N, log10(MSE_TEO_SENZA2_N), col = "darkslategray")
 
+legend("bottomleft", 
+       legend = c("ML pesato", "Media semplice", "Solo gruppo 1", "Linea Teorica"),
+       col = c("red", "blue", "darkslategray", "black"), 
+       lty = c(1, 1, 1, 2), 
+       pch = c(19, 19, 19, NA),
+       bty = "n",  # Mantiene la legenda senza bordo (molto più pulita)
+       cex = 0.9)
 
 # --- GRAFICO SCENARIO 2 (Varianze 1 e 4) ---
 plot(log_N, log10(MSE_EMP_ML2_N), type = "p", pch = 16, col = "red", 
@@ -349,14 +389,16 @@ points(log_N, log10(MSE_EMP_SENZA2_N), pch = 16, col = "darkslategray")
 lines(log_N, log10(MSE_TEO_SENZA2_N), col = "darkslategray")
 
 # Aggiungiamo la legenda al secondo grafico
-legend("topright", legend = c("ML pesato", "Media semplice", "Solo gruppo 1", "Linea Teorica"),
+legend("bottomleft", 
+       legend = c("ML pesato", "Media semplice", "Solo gruppo 1", "Linea Teorica"),
        col = c("red", "blue", "darkslategray", "black"), 
-       pch = c(16, 16, 16, NA), lty = c(NA, NA, NA, 1), bty = "n")
+       lty = c(1, 1, 1, 2), 
+       pch = c(19, 19, 19, NA),
+       bty = "n",  # Mantiene la legenda senza bordo (molto più pulita)
+       cex = 0.9)
 
 # Ripristiniamo la visualizzazione singola per i futuri grafici
 par(mfrow = c(1, 1))
-
-abline(h = MSE_TEO_ML1, col = "red", "MSE Teorico ML Scenario 1")
 
 ### PARTE PER CONSEGNARE I GRAFICI###
 # ==============================================================================
@@ -453,11 +495,9 @@ plot(N_MC_TOTALI, MSE_EMP_SM1_TOTALI,
 lines(N_MC_TOTALI, MSE_EMP_SENZA2_TOTALI, type = "b", pch = 19, col = "red")
 lines(N_MC_TOTALI, MSE_EMP_ML1_TOTALI, type = "b", pch = 19, col = "blue")
 
-
 abline(h = MSE_TEO_SM1, col = "green", lty = 2, lwd = 1.5)
 abline(h = MSE_TEO_SENZA2, col = "red", lty = 2, lwd = 1.5)
 abline(h = MSE_TEO_ML1, col = "blue", lty = 2, lwd = 1.5)
-
 
 legend("topright", 
        legend = c("Media Semplice (Empirico)", 
@@ -470,7 +510,8 @@ legend("topright",
        lwd = c(1.5, 1.5, 1.5, 1.5), 
        cex = 0.8,         
        bg = "white",       
-       box.col = "gray")    
+       box.col = "gray")
+
 # ==============================================================================
 # GRAFICO 3: Convergenza Monte Carlo per tutti e tre gli Stimatori (CORRETTO)
 # ==============================================================================
@@ -498,7 +539,6 @@ lines(N_MC_TOTALI, MSE_EMP_ML1_TOTALI, type = "b", pch = 19, col = "blue")
 abline(h = MSE_TEO_SM1, col = "green", lty = 2, lwd = 1.5)
 abline(h = MSE_TEO_SENZA2, col = "red", lty = 2, lwd = 1.5)
 abline(h = MSE_TEO_ML1, col = "blue", lty = 2, lwd = 1.5)
-
 
 legend("topleft", 
        legend = c("Media semplice (empirico)", 
